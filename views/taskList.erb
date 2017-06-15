@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Todo List</title>
+</head>
+
+<body>
+<h1><center>Todo List</center></h1>
+<form action="/add" method="POST">
+
+<input type="text" name="task"/>
+<br>
+<input type="submit" name="Add Task"/>
+
+</form>
+
+<ul>
+<% tasks.each do|todo| %>
+
+<% if todo.done %>
+<li class="strikethrough">
+
+<% else %>
+<li>
+<% end %>
+
+<%= todo.task.upcase %>
+
+<form action="/done" method="POST">
+
+<input type="hidden" name="task" value="<%= todo.task %>">
+
+<% if todo.done %>
+<input type="submit" value="UnDone">
+
+<% else %>
+<input type="submit" value="Done">
+<% end %>
+
+</form>
+<br>
+</li>
+
+<% end %>
+</ul>
+
+<style type="text/css">
+	.strikethrough {
+		text-decoration: line-through;
+	}
+
+</style>
+</body>
+</html>

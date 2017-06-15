@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TODO LIST</title>
+</head>
+<body>
+
+<form action="/add" method="POST">
+
+<br>
+<input type="text" name = "task" placeholder="Enter Your Task"/>
+<br><br>
+<input type="submit" value="Add"/>
+<input type="checkbox" name ="urgent" value="true"/>URGENT
+<input type="checkbox" name = "important" value="true"/>IMPORTANT
+
+</form>
+
+<ol>
+
+<% array.each do|var| %>
+	<% if var.task && var.task!=""%>
+		<% if var.done %>
+			<li class="strike">
+
+		<% else %>
+			<li>
+		<% end %>
+
+		<% if var.urgent == "true" && var.important == "true" %>
+			<color class="priority1"/>
+
+		<% elsif var.urgent == "true" && var.important != "true" %>
+			<color class="priority2"/>
+
+		<%elsif var.urgent != "true" && var.important == "true" %>
+			<color class="priority3"/>
+
+		<%else %>
+			<color class="priority4"/>	
+		<% end %>
+
+		<b><%= var.task %></b>
+
+		<form action="/done" method="POST">
+	
+		<input type="hidden" name="task" value="<%= var.task %>"/>
+
+		<% if var.done %>
+			<input type="submit" value="UnDone">
+
+		<% else %>
+			<input type="submit" value="Done">
+		<% end %>
+
+		</form>
+		<form action="/remove" method="POST">
+			<input type="hidden" name="task" value="<%= var.task %>"/>
+			<input type="submit" value="Remove">
+		</form>
+		</li>
+	<% end %>
+<% end %>
+<br>
+</ol>
+
+<style type="text/css">
+	.strike{
+		text-decoration: line-through;
+	}
+</style>
+
+<style type="text/css">
+	.priority1{
+		color:red;
+	}
+</style>
+
+<style type="text/css">
+	.priority2{
+		color:blue;
+	}
+</style>
+
+<style type="text/css">
+	.priority3{
+		color:green;
+	}
+</style>
+
+<style type="text/css">
+	.priority4{
+		color:black;
+	}
+</style>
+</body>
+</html>
